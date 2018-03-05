@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>CodeLab.she</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<style >
+
+
+body {
+   background-image: url("https://static1.squarespace.com/static/57644ddc197aea9548546650/t/581902706b8f5bc983049789/1478034291519/Wellstruck+%2F%2F+Brand+identity%2C+packaging%2C+product+photography%2C+and+website+for+skincare+product+line+More+Than+Enough+Apothecary");
+   background-repeat: no-repeat, repeat;
+   background-color:transparent ;
+   -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+.navbar {
+   background-color: transparent;
+   background: transparent;
+   border-color: transparent;
+   /*background-color: rgba(255,255,255,0.1);*/ }
+.navbar .collapse .navbar-nav li a{
+    color:black;
+}
+.container .row .card-deck .card{
+height: 100%;
+}
+.container .row .card-deck .card .card-img-top{
+height: 350px;
+}
+
+</style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg ">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+      <li class="nav-item active">
+        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/MakeUP">Make Up</a>
+      </li>
+       <li class="nav-item">
+        <a class="nav-link" href="/skinCare">Skin Care</a>
+      </li>
+       <li class="nav-item">
+        <a class="nav-link" href="/tools">Brushes & Tools</a>
+      </li>
+        <li class="nav-item">
+        <a class="nav-link" href="/dashboard">DashBoard</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+<div class="container" id="root">
+
+<div class="modal fade" id="addPhone" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Buy</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Enter your Phone Number</label>
+                        <input v-model="newSms.toNumber" type="text" class="form-control">
+                    </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button @click="sendOTP" type="button" class="btn btn-primary"  >Send SMS</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="verifyPhone" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Verify</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Enter the Verification Code We have just sent to Your Phone Number </label>
+                        <input v-model="compareCode" type="text" class="form-control">
+                    </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button @click="compareOTP" type="button" class="btn btn-primary"  >Verify</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+  <div class="row justify-content-between">
+      <div  class="col-12 col-md-3" v-for="brand in brands" v-if="brand.product.productType=='Skin_Care'" >
+  <div class="card-deck">
+  <div class="card bg-light border-secondary mb-3">
+    <img class="card-img-top" :src="brand.product.productImg" alt="Card image cap">
+    <div class="card-body text-center">
+      <h3 class="card-title">{{brand.product.productName}}</h3>
+      <h5 class="card-text">{{brand.product.productPrice}} <br></h5>
+      <p class="card-text">{{brand.product.productDescription}}</p>
+            <button class="btn btn-success" @click="openAddModal">Buy</button>
+    </div></div>
+  </div>
+</div>
+  </div>
+</div>
+
+<script>
+ function getBrands() {
+        axios.get('/api/brands').then(function (response) {
+            app.brands = response.data;
+        }); 
+      };
+        function getSms() {
+        axios.get('/api/sms').then(function (response) {
+            app.smss = response.data;
+        console.log(response.data);
+        }); 
+      }
+   var app=new Vue({
+    el:'#root',
+    data:{
+      brands:[],
+     smss:[],
+     compareCode:'',
+     compares:[],
+     newSms:{
+      toNumber:'',
+verifyCode:'',
+
+     },
+         },
+    methods:{
+      // Open a modal to enter the Phone number
+  openAddModal: function () {
+                $('#addPhone').modal('show')
+
+            },
+            // send the Phone number to the API and Open a modal to enter the verification code
+    sendOTP: function () {
+                axios.post('/api/sms', {sms: this.newSms}).then(function (response) {
+
+                    if (response.data.isSuccess) {
+                        getSms();
+                        $('#addPhone').modal('hide');
+                        $('#verifyPhone').modal('show');
+                    }
+                }).catch(function (error) {
+                    console.log("Error")
+
+                })
+            },
+            // compare the Entered code with the one sent in the sms
+   compareOTP:function(){
+           
+            getSms();
+             $('#verifyPhone').modal('hide');
+                    for (i =0 ; i<this.smss.length; i++) {
+                      if (this.smss[i].verifyCode == this.compareCode) {
+                          console.log(this.compareCode);                 
+                          alert('Phone Verified');
+                        }
+                              
+                      }
+                      
+            },
+    },
+      mounted: function () {
+           getBrands();
+             getSms();
+            
+           
+        },
+    });
+    
+</script>
+
+</body>
+</html>

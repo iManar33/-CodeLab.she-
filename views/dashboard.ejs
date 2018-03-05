@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>CodeLab.she</title>
+		<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+<style>
+  body{
+    background-image: url("https://i.pinimg.com/564x/17/8b/1f/178b1f2b647674b53eb17be74323641b.jpg");
+     background-repeat: no-repeat, repeat;
+   background-color: #cccccc;
+   -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  }
+.navbar {
+   background-color: transparent;
+   background: transparent;
+   border-color: transparent;
+   /*background-color: rgba(255,255,255,0.1);*/ }
+.navbar .collapse .navbar-nav li a{
+    color:white;
+}
+</style>
+
+</head>
+<body>
+<nav class="navbar navbar-expand-lg">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+      <li class="nav-item active">
+        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/MakeUP">Make Up</a>
+      </li>
+       <li class="nav-item">
+        <a class="nav-link" href="/skinCare">Skin Care</a>
+      </li>
+       <li class="nav-item">
+        <a class="nav-link" href="/tools">Brushes & Tools</a>
+      </li>
+        <li class="nav-item">
+        <a class="nav-link" href="/dashboard">DashBoard</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container " id="root">
+      <!-- ADD Modal -->
+    <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add new Product</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Brand Name</label>
+                        <input v-model="newBrand.brandName" type="text" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Product Name</label>
+                        <input v-model="newBrand.product.productName" type="text" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>product Price</label>
+                        <input v-model="newBrand.product.productPrice" type="text" class="form-control">
+                    </div>
+                  
+                    <div class="form-group">
+                       <!-- <div class="form-group col-md-4"> -->
+      <label for="inputState">Product Type</label>
+      <select v-model="newBrand.product.productType" id="inputState" class="form-control">
+        <option>Make_Up</option>
+        <option>Skin_Care</option>
+        <option>Tools</option>
+      </select>
+    </div>
+                    <div class="form-group" >
+                        <label>Product Image Link</label>
+                        <input v-model="newBrand.product.productImg" type="text" class="form-control" >
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button @click="addBrand" type="button" class="btn btn-primary">Add</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Edit Modal -->
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Edit Brand</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                    <div class="modal-body">
+                    <div class="form-group">
+                        <label>Brand Name</label>
+                        <input v-model="editingBrand.brandName" type="text" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Product Name</label>
+                        <input v-model="editingBrand.product.productName" type="text" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>product Price</label>
+                        <input v-model="editingBrand.product.productPrice" type="text" class="form-control">
+                    </div>
+                  
+                    <div class="form-group">
+                      <label for="inputState">Product Type</label>
+      <select v-model="editingBrand.product.productType" id="inputState" class="form-control">
+        <option>Make_Up</option>
+        <option>Skin_Care</option>
+        <option>Tools</option>
+      </select>
+    </div>
+                    <div class="form-group">
+                        <label>Product Image Link</label>
+                        <input v-model="editingBrand.product.productImg" type="text" class="form-control">
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button @click="editBrand" type="button" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-7">
+            <button class="btn btn-success" @click="openAddModal">Add New Product</button>
+
+        </div>
+    </div>
+  <div class="row justify-content-center mt-5">
+    <div class="col-12 col-md-8">
+      <div class="card">
+                <div class="card-body p-0">
+                    <table class="table">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th>No.</th>
+                            <th>Brand Name</th>
+                            <th>Product Name</th>
+                            <th>Product Price</th>
+                            <th>Product Type</th>
+                            <th>Product Image</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr v-for="(brand,index) in brands">
+                            <td>{{index + 1}}</td>
+                            <td>{{brand.brandName}}</td>
+                            <td>{{brand.product.productName}}</td>
+                            <td>{{brand.product.productPrice}}</td>
+                            <td>{{brand.product.productType}}</td>
+                            <td>
+                              <img :src="brand.product.productImg" style="height: 150px; width: 150px">
+                            </td>
+                            <td>
+                                <button @click="removeBrand(brand._id)" class="btn btn-danger btn-sm">Remove
+                                </button>
+                                <button @click="openEditModal(brand)" class="btn btn-info btn-sm">Edit
+                                </button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+    </div> 
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+<script>
+function getBrands() {
+        axios.get('/api/brands').then(function (response) {
+            app.brands = response.data;
+        });
+}
+  var app=new Vue({
+    el:'#root',
+    data:{
+      brands:[],
+      newBrand:{ 
+  brandName:"",
+  brandImg:"",
+  brandDescriptiopn:"",
+  product:{
+    productName:"",
+    productPrice:'', 
+    productExpDate:"" , 
+    productImg:"", 
+    productDescription:"", 
+    productType:"",
+      },
+                },
+
+      editingBrand:{ 
+  brandName:"",
+  brandImg:"",
+  brandDescriptiopn:"",
+  product:{
+    productName:"",
+    productPrice:'', 
+    productExpDate:"" , 
+    productImg:"", 
+    productDescription:"", 
+    productType:"",
+          },
+                },
+      },
+      methods:{
+         // Open a modal to enter the product information
+                    openAddModal: function () {
+                $('#addModal').modal('show')
+
+            },
+             // Open a modal to enter the new product information
+            openEditModal: function (brand) {
+                this.editingBrand = brand
+                $('#editModal').modal('show')
+
+            },
+            // add a new Product and send its data to the API
+            addBrand: function () {
+                axios.post('/api/brands', {brand: this.newBrand}).then(function (response) {
+
+                    if (response.data.isSuccess) {
+                        getBrands();
+                        $('#addModal').modal('hide');
+                    }
+
+                }).catch(function (error) {
+                    console.log("Error")
+
+                })
+            },
+            // edit an existing Product and update its data in the API
+            editBrand: function () {
+                axios.put('/api/brands', {brand: this.editingBrand}).then(function (response) {
+                    if (response.data.isSuccess) {
+                        getBrands();
+                        $('#editModal').modal('hide');
+                        
+                    }
+                }).catch(function (error) {
+                    console.log("Error")
+
+                })
+            },
+            // delete a product from the API
+         removeBrand: function (id) {
+                axios.delete('/api/brands', {
+                    params: {
+                        id: id
+                    }
+                }).then(function (response) {
+                    if (response.data.isSuccess) {
+                        getBrands()
+                    }
+                }).catch(function (error) {
+                    console.log("Error")
+
+                })
+            },
+          
+      },
+     
+       mounted: function () {
+           getBrands();
+            console.log(app.brands);
+           
+        },
+
+  });
+
+</script>
+</body>
+</html>
