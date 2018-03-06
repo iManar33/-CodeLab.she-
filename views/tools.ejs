@@ -177,6 +177,7 @@ verifyCode:'',
     methods:{
       // Open a modal to enter the Phone number
   openAddModal: function () {
+    this.newSms.toNumber="";
                 $('#addPhone').modal('show')
 
             },
@@ -187,6 +188,7 @@ verifyCode:'',
                     if (response.data.isSuccess) {
                         getSms();
                         $('#addPhone').modal('hide');
+                        this.newSms.verifyCode="";
                         $('#verifyPhone').modal('show');
                     }
                 }).catch(function (error) {
