@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>CodeLab.she</title>
-		<meta charset="utf-8">
+  <title>CodeLab.she</title>
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
 <style>
   body{
-    background-image: url("https://i.pinimg.com/564x/17/8b/1f/178b1f2b647674b53eb17be74323641b.jpg");
+    background-image: url("https://petapixel.com/assets/uploads/2017/01/cosmetic-out-of-camera.jpg");
      background-repeat: no-repeat, repeat;
    background-color: #cccccc;
    -webkit-background-size: cover;
@@ -22,9 +22,21 @@
    background: transparent;
    border-color: transparent;
    /*background-color: rgba(255,255,255,0.1);*/ }
-.navbar .collapse .navbar-nav li a{
+.navbar .collapse .navbar-nav li a ,.navbar button{
     color:white;
 }
+tbody tr td img{
+  height: 150px;
+  width: 150px;
+}
+.table-responsive {
+    overflow-x:auto;
+    border-collapse: collapse;
+    width: 100%;
+}
+ .navbar-toggler{
+   border-color: white;
+  }
 </style>
 
 </head>
@@ -156,9 +168,10 @@
         </div>
     </div>
   <div class="row justify-content-center mt-5">
-    <div class="col-12 col-md-8">
+    <div class=" col-md-8">
       <div class="card">
                 <div class="card-body p-0">
+                  <div class="table-responsive">
                     <table class="table">
                         <thead class="thead-dark">
                         <tr>
@@ -179,7 +192,7 @@
                             <td>{{brand.product.productPrice}}</td>
                             <td>{{brand.product.productType}}</td>
                             <td>
-                              <img :src="brand.product.productImg" style="height: 150px; width: 150px">
+                              <img :src="brand.product.productImg">
                             </td>
                             <td>
                                 <button @click="removeBrand(brand._id)" class="btn btn-danger btn-sm">Remove
@@ -190,6 +203,7 @@
                         </tr>
                         </tbody>
                     </table>
+                  </div>
                 </div>
             </div>
     </div> 
@@ -215,11 +229,9 @@ function getBrands() {
       newBrand:{ 
   brandName:"",
   brandImg:"",
-  brandDescriptiopn:"",
   product:{
     productName:"",
     productPrice:'', 
-    productExpDate:"" , 
     productImg:"", 
     productDescription:"", 
     productType:"",
@@ -229,11 +241,9 @@ function getBrands() {
       editingBrand:{ 
   brandName:"",
   brandImg:"",
-  brandDescriptiopn:"",
   product:{
     productName:"",
     productPrice:'', 
-    productExpDate:"" , 
     productImg:"", 
     productDescription:"", 
     productType:"",
@@ -243,6 +253,11 @@ function getBrands() {
       methods:{
          // Open a modal to enter the product information
                     openAddModal: function () {
+                      this.newBrand.brandName="";
+                      this.newBrand.product.productImg="";
+                      this.newBrand.product.productName="";
+                      this.newBrand.product.productPrice="";
+                      this.newBrand.product.productType="";
                 $('#addModal').modal('show')
 
             },

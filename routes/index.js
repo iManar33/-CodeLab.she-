@@ -18,11 +18,9 @@ console.log(error.message)
 var Brand =mongoose.model('Brand',{ 
 	brandName:String,
 	brandImg:String,
-	brandDescriptiopn:String,
 	product:{
 		productName:String,
 		productPrice:Number, 
-		productExpDate:Date , 
 		productImg:String, 
 		productDescription:String, 
 		productType:String,
