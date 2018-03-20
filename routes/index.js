@@ -63,8 +63,8 @@ router.get('/api/brands',function(req,res){
 
 // initial the Nexmo API Library
 const nexmo = new Nexmo({
-  apiKey: '7a4fae2f',
-  apiSecret: '9aGqilp9mwDryexe'
+  apiKey: 'c3e43df9',
+  apiSecret: 'gI5LUNp3oMF2WT79'
 });
 
  // SMS API model
